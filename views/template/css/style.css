@@ -1,4 +1,4 @@
-/*Общие настройки*/
+﻿/*Общие настройки*/
 :root {
     --color-red: #FF384E;
     --color-dark-red: #D4384B;
@@ -60,7 +60,7 @@ p {
     width: 100%;
     align-items: center;
     align-content: space-between;
-
+	
     min-height: 100vh;
 
 }
@@ -377,6 +377,8 @@ p {
     padding-top: 5px;
     padding-bottom: 15px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+
+
 }
 
 .price {
@@ -386,6 +388,7 @@ p {
 .button {
     display: flex;
     width: 100%;
+
 }
 
 .button a {
@@ -401,6 +404,7 @@ p {
 
 .button a:hover {
     background-color: var(--color-red);
+		
 }
 
 .pagination {
