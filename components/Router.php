@@ -35,7 +35,9 @@ class Router
     private function getURI()
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
-            return trim($_SERVER['REQUEST_URI']);
+            $url = parse_url(trim($_SERVER['REQUEST_URI']));
+            unset($url['query']);
+            return implode($url);
         }
     }
 
@@ -50,6 +52,7 @@ class Router
      */
     private function getInternalRoute($uriPattern, $path, $uri)
     {
+
         $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
         return explode('/', $internalRoute);
     }
@@ -68,7 +71,9 @@ class Router
             include_once($controllerFile);
             return true;
         } else {
-            $this->error404();
+            echo $controllerFile;
+            echo'не найден контроллер';
+            //$this->error404();
         }
     }
 
@@ -89,7 +94,7 @@ class Router
                 //и action с параметрами обрабатывает запрос
                 $segments = $this->getInternalRoute($uriPattern, $path, $uri);//Получить внутренний route
 
-                $controllerName = array_shift($segments) . 'Controller';
+                $controllerName = ucfirst(array_shift($segments) . 'Controller');
 
                 $actionName = 'action' . array_shift($segments);
 
@@ -101,7 +106,8 @@ class Router
                 $controllerObject = new $controllerName; // объект контроллера
                 //Проверить, существует ли action, если нет то перекинуть на 404
                 if (!method_exists($controllerObject, $actionName)) {
-                    $this->error404();
+                    echo 'не найден action';
+                    //$this->error404();
                 }
                 //Создать объект, вызвать метод т.е action, и закончить цикл
                 if (call_user_func_array([$controllerObject, $actionName], $parameters)) {
@@ -110,7 +116,8 @@ class Router
             }
         }
         if (!$findedRoute) {
-            $this->error404();
+            echo 'не найден роут';
+           // $this->error404();
         }
     }
 
