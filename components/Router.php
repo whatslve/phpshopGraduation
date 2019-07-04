@@ -73,8 +73,10 @@ class Router
         } else {
             echo $controllerFile;
             echo'не найден контроллер';
-            //$this->error404();
+            $this->error404();
+            return false;
         }
+
     }
 
     /**
@@ -107,7 +109,7 @@ class Router
                 //Проверить, существует ли action, если нет то перекинуть на 404
                 if (!method_exists($controllerObject, $actionName)) {
                     echo 'не найден action';
-                    //$this->error404();
+                    $this->error404();
                 }
                 //Создать объект, вызвать метод т.е action, и закончить цикл
                 if (call_user_func_array([$controllerObject, $actionName], $parameters)) {
@@ -117,7 +119,7 @@ class Router
         }
         if (!$findedRoute) {
             echo 'не найден роут';
-           // $this->error404();
+            $this->error404();
         }
     }
 
